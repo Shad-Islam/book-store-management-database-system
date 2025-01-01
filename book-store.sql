@@ -14,7 +14,9 @@ CREATE Table books(
     stock_quantity INT NOT NULL,
     author_id INT NOT NULL,
 
-    FOREIGN KEY (author_id) REFERENCES authors(author_id)    
+    FOREIGN KEY (author_id) REFERENCES authors(author_id)  
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
 );
 
 --customer table
@@ -33,15 +35,21 @@ CREATE TABLE orders(
     total_amount DECIMAL(10,2) NOT NULL,
 
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
 )
 
 --order details table
 CREATE TABLE order_details(
-    order_details_id PRIMARY KEY AUTO_INCREMENT,
+    order_details_id INT PRIMARY KEY AUTO_INCREMENT,
     order_id INT NOT NULL,
     book_id INT NOT NULL,
     quantity INT NOT NULL,
 
-    FOREIGN KEY (order_id) REFERENCES orders(order_id),
-
+    FOREIGN KEY (order_id) REFERENCES orders(order_id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (book_id) REFERENCES books(book_id)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
 )
